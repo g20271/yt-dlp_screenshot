@@ -13,7 +13,7 @@ config.yamlに取得したいライブ配信のURLを記述します。crontab�
 以下はサンプルです:
 ```yaml
 stream_list:
-    - name: 秩父が浜
+    - name: 父母ヶ浜
       stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
       save_path: ./data/mitoyo
       crontab: "0-59/5 * * * *" # every 5 minutes
@@ -39,6 +39,3 @@ stream_list:
    `python3 screenshot_capture.py`
 
 5. 🎉 Have Fun
-
-
-# 
