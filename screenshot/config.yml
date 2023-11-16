@@ -1,5 +1,5 @@
 stream_list:
     - name: 父母ヶ浜
       stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
-      save_path: ./data/mitoyo
+      save_path: ./output/mitoyo
       crontab: "0-59/1 * * * *" # every 5 minutes
