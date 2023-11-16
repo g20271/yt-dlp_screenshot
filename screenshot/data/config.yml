@@ -2,4 +2,4 @@ stream_list:
   - name: 秩父が浜
     stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
     save_path: ./data
-    crontab: "* * * * *" # every 5 minutes
+    crontab: "0-59/5 * * * *" # every 5 minutes
