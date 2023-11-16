@@ -1,14 +1,19 @@
 import os
+from sched import scheduler
 import sys
 import datetime
 import yaml
 import subprocess
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 
 
 
-PATH = os.path.dirname(p=os.path.abspath(__file__))
+BIN_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../bin")
+
+YT_DLP_BIN_PATH = os.path.join(BIN_PATH, "yt-dlp")
 
 
 
@@ -18,9 +23,19 @@ class YoutubeLiveScreenshot:
         self.config = config
 
         self.scheduler = BlockingScheduler()
+        # self.scheduler = BackgroundScheduler() # これつかうならmain関数の最後にself.scheduler.wait()を追加する必要がある
 
         self.scheduler_add_job()
 
+        self.update_bin()
+        # 半日ごとに実行するジョブを追加
+        self.scheduler.add_job(self.update_bin, IntervalTrigger(hours=12))
+
+    def update_bin(self):
+        #yt-dlpをアップデート
+        subprocess.run([YT_DLP_BIN_PATH, "-U"])
+
+    @staticmethod
     def yaml_parse(func):
         def wrapper(self):
             config = self.config
@@ -30,13 +45,14 @@ class YoutubeLiveScreenshot:
 
         return wrapper
 
-    def take_screenshot(self, url, output_path):
-        #yt-dlpをアップデート
-        subprocess.run([os.path.join(PATH, f"../bin/yt-dlp_linux"), "-U"])
-        print
-# '-f', 'bestvideo[height<=2160]+bestaudio/best[height<=2160]', 
+    def take_screenshot(self, name, url, output_path):
+        
         # yt-dlpを使用してストリームのURLを取得
-        stream_url = subprocess.run([os.path.join(PATH, f"../bin/yt-dlp_linux"), '-g', url], capture_output=True, text=True).stdout
+        stream_url = subprocess.run([YT_DLP_BIN_PATH, '-g', url], capture_output=True, text=True).stdout
+
+        # 4Kダウンロードできるが12時間前の画像になる上、先頭からダウンロードするため負荷が大きい
+        # 1080pを超えるダウンロードはHLSでない関係(yt-dlpもDASHは部分的なサポート?)とかで、安定を求めるならやめたほうがいいかも
+        # stream_url = subprocess.run([YT_DLP_BIN_PATH, '-g', url, "-f 313", "--live-from-start"], capture_output=True, text=True).stdout
 
         # 現在の日時を取得
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -44,16 +60,19 @@ class YoutubeLiveScreenshot:
         os.makedirs(output_path, exist_ok=True)
 
         # ffmpegを使用してスクリーンショットを取得
-        subprocess.run(["ffmpeg", "-i", stream_url, "-ss", "00:00:05", "-vframes", "1", os.path.join(output_path, f"screenshot_{timestamp}.jpg")])
+        subprocess.run(["ffmpeg", "-i", stream_url, "-vframes", "1", os.path.join(output_path, f"screenshot_{timestamp}.jpg")])
+
+
+        print(f"{name}: Screenshot taken at {timestamp} and saved to {output_path}")
 
     @yaml_parse
     def scheduler_add_job(self, stream):
         print(stream)
-        self.scheduler.add_job(self.take_screenshot, args=[stream['stream_url'], stream['save_path']], trigger=CronTrigger.from_crontab(stream['crontab']))
+        self.scheduler.add_job(self.take_screenshot, args=[stream['name'], stream['stream_url'], stream['save_path']], trigger=CronTrigger.from_crontab(stream['crontab']))
 
 if __name__ == "__main__":
 
     with open("data/config.yml") as file:
         yls = YoutubeLiveScreenshot(file)
-        yls.take_screenshot("https://www.youtube.com/watch?v=jfKfPfyJRdk", "data")
+        # yls.take_screenshot("test", "https://www.youtube.com/watch?v=DHOHZJNJIjI", "data/test")
         yls.scheduler.start()

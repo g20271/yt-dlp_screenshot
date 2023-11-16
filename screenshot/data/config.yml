@@ -1,5 +1,5 @@
 stream_list:
-  - name: 秩父が浜
-    stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
-    save_path: ./data
-    crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: 秩父が浜
+      stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
+      save_path: ./data/mitoyo
+      crontab: "0-59/1 * * * *" # every 5 minutes
