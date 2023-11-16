@@ -72,7 +72,6 @@ class YoutubeLiveScreenshot:
 
 if __name__ == "__main__":
 
-    with open("data/config.yml") as file:
+    with open("config.yml") as file:
         yls = YoutubeLiveScreenshot(file)
-        # yls.take_screenshot("test", "https://www.youtube.com/watch?v=DHOHZJNJIjI", "data/test")
         yls.scheduler.start()
