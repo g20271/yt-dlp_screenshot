@@ -55,12 +55,12 @@ class YoutubeLiveScreenshot:
         # stream_url = subprocess.run([YT_DLP_BIN_PATH, '-g', url, "-f 313", "--live-from-start"], capture_output=True, text=True).stdout
 
         # 現在の日時を取得
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M")
         print(stream_url)
         os.makedirs(output_path, exist_ok=True)
 
         # ffmpegを使用してスクリーンショットを取得
-        subprocess.run(["ffmpeg", "-i", stream_url, "-vframes", "1", os.path.join(output_path, f"screenshot_{timestamp}.jpg")])
+        subprocess.run(["ffmpeg", "-i", stream_url, "-vframes", "1", os.path.join(output_path, f"{timestamp}.jpg")])
 
 
         print(f"{name}: Screenshot taken at {timestamp} and saved to {output_path}")

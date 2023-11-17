@@ -1,5 +1,42 @@
 stream_list:
     - name: 父母ヶ浜
-      stream_url: https://www.youtube.com/watch?v=u6e_v5ntnyw
+      stream_url: https://www.youtube.com/@lovemitoyo5119/live
       save_path: ./output/mitoyo
-      crontab: "0-59/1 * * * *" # every 5 minutes
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: takeda
+      stream_url: https://www.youtube.com/watch?v=oFiEtYIjRTc
+      save_path: ./output/takeda
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: setoohashi
+      stream_url: https://www.youtube.com/@KBNkagawa/live
+      save_path: ./output/setoohashi
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: '静岡市さった峠　広重の富士山 / Mt. Fuji (World Heritage Site): Live Streaming in Shizuoka City'
+      stream_url: https://www.youtube.com/@user-wn8rm5iq7e/live
+      save_path: ./output/shizuokasattafuji
+      crontab: "0-59/5 * * * *" # every 5 minutes
+      
+    - name: '【LIVE】河口湖からの「富士山ライブカメラ」　"mount fuji live camera" from Lake Kawaguchiko'
+      stream_url: https://www.youtube.com/watch?v=bdUbACCWmoY # hukusuuhaisinnari
+      save_path: ./output/kawaguchiko
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: '【Mt. FUJI LIVE】箱根・芦ノ湖　紅葉の様子　晴れの日は「富士山」も【ライブ】 | TBS NEWS DIG'
+      stream_url: https://www.youtube.com/watch?v=lBUMwQC50RQ
+      save_path: ./output/hakone
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: '富士山ライブカメラ Streaming Mt.Fuji Live from Shizuoka.'
+      stream_url: https://www.youtube.com/@serokun-live/live
+      save_path: ./output/shizuoka1
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: '富士山ライブカメラ！星空と流星 Starry Sky Mt.Fuji Mount Fuji Live Camera'
+      stream_url: https://www.youtube.com/@shojiko/live # huksuuari
+      save_path: ./output/shizuoka2
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: 'Northern Light Live Levi, Finland. North view'
+      stream_url: https://www.youtube.com/watch?v=p9zw4PxLRYw # hukusuuari
+      save_path: ./output/finland
+      crontab: "0-59/5 * * * *" # every 5 minutes
+    - name: 'Namibia: Live stream in the Namib Desert'
+      stream_url: https://www.youtube.com/watch?v=ydYDqZQpim8
+      save_path: ./output/namib
+      crontab: "0-59/5 * * * *" # every 5 minutes
